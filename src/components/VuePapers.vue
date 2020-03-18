@@ -90,6 +90,7 @@ export default class VuePapers extends Vue {
     const marginBottom = parseInt(getComputedStyle(el, '').getPropertyValue('margin-bottom')) || 0
 
     height += marginTop + marginBottom
+    height += this.marginBetween
 
     return height || 0
   }

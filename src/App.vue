@@ -7,7 +7,7 @@
     :margin-between="20"
     >
 
-    <h3 slot="header" style="border: 1px solid black;">Header</h3>
+    <h3 slot="header" contenteditable style="border: 1px solid black;">Header</h3>
     <h5 slot="footer" style="border: 1px solid black;">Some footer<br>here</h5>
 
     <div
@@ -28,8 +28,8 @@ import VuePapers from './components/VuePapers.vue'
   components: { VuePapers }
 })
 export default class App extends Vue {
-  margin = 0
-  padding = 10
+  margin = 20
+  padding = 0
   blocks = [120, 130, 140, 150, 140, 230, 220, 250, 120, 230, 110, 240, 150]
 
   mounted () {
