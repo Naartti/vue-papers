@@ -2,9 +2,26 @@
   "name": "vue-papers",
   "version": "0.1.0",
   "private": true,
+  "author": "Mattias Naarttijärvi",
+  "description": "Place elements on to multiple A4 pages.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Naartti/vue-papers"
+  },
+  "bugs": {
+    "url": "https://github.com/Naartti/vue-papers/issues"
+  },
+  "homepage": "https://github.com/Naartti/vue-papers#readme",
+  "main": "dist/index.common.js",
+  "module": "dist/index.esm.js",
+  "unpkg": "dist/index.min.js",
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:bundle": "vue-cli-service build --target lib --name index ./src/components/VuePapers.vue",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
