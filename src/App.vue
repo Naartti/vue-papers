@@ -65,6 +65,17 @@ export default class App extends Vue {
 }
 </script>
 <style lang="less">
+  body, html {
+    margin: 20px 10px;
+  }
+
+  #app {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
 
   .block {
     position: relative;

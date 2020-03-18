@@ -47,7 +47,7 @@
 </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component
 export default class VuePapers extends Vue {
@@ -55,6 +55,8 @@ export default class VuePapers extends Vue {
   @Prop({ default: 0 }) private paddingBottom!: number
   @Prop({ default: 0 }) private marginBetween!: number
 
+  delays = [100, 500, 1000, 2000, 5000, 10000, 15000]
+  delayIndex = 0
   height = 1123 - 2 * 45 // Match print padding
   width = 794
   pages: number[][] = []
@@ -78,9 +80,8 @@ export default class VuePapers extends Vue {
   }
 
   update () {
-    this.$nextTick(() => {
-      this.checkHeights()
-    })
+    this.delayIndex = 0
+    this.checkHeightsInvoker()
   }
 
   private getElementHeight (el: Element) {
@@ -95,6 +96,18 @@ export default class VuePapers extends Vue {
     return height || 0
   }
 
+  checkHeightsInvoker () {
+    if (this.delayIndex <= this.delays.length - 1) {
+      const delay = this.delays[this.delayIndex++]
+      setTimeout(this.checkHeightsInvoker.bind(this), delay)
+    }
+
+    this.checkHeights()
+  }
+
+  @Watch('paddingTop')
+  @Watch('paddingBottom')
+  @Watch('marginBetween')
   checkHeights () {
     let pageIndex = 0
     let pageHeight = 0
@@ -125,11 +138,18 @@ export default class VuePapers extends Vue {
       pages[pageIndex].push(i)
     }
 
-    console.log(childrenHeights)
     this.pages = pages
   }
 }
 </script>
+<style lang="less">
+  @media print {
+    html, body {
+      margin: 0px;
+      padding: 0px;
+    }
+  }
+</style>
 <style scoped lang="less">
   @shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
   @page-width: 794px; // 21cm;
@@ -199,14 +219,14 @@ export default class VuePapers extends Vue {
 
       &__header {
         position: absolute;
-        top: 28px;
+        top: 45px;
         left: 45px;
         right: 45px;
         height: auto;
         z-index: 2;
 
         @media print {
-          top: -18px;
+          top: 0px;
           left: 0px;
           right: 0px;
         }
@@ -214,14 +234,14 @@ export default class VuePapers extends Vue {
 
       &__footer {
         position: absolute;
-        bottom: 28px;
+        bottom: 45px;
         left: 45px;
         right: 45px;
         height: auto;
         z-index: 2;
 
         @media print {
-          bottom: -18px;
+          bottom: 0px;
           left: 0px;
           right: 0px;
         }
