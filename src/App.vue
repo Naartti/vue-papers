@@ -3,6 +3,8 @@
   <vue-papers
     ref="vuePapers"
     :padding-top="120"
+    :padding-bottom="padding"
+    :margin-between="20"
     >
     <div
       v-for="(height, index) in blocks"
@@ -23,16 +25,24 @@ import VuePapers from './components/VuePapers.vue'
 })
 export default class App extends Vue {
   margin = 0
+  padding = 10
   blocks = [120, 130, 140, 150, 140, 230, 220, 250, 120, 230, 110, 240, 150]
 
   mounted () {
+    window.dev.setPadding = (padding: number) => {
+      this.padding = padding
+      this.update()
+    }
+
     window.dev.setMargin = (margin: number) => {
       this.margin = margin
-      console.log('New margin: ' + margin)
-
-      const el = this.$refs.vuePapers as VuePapers
-      el.update()
+      this.update()
     }
+  }
+
+  update () {
+    const el = this.$refs.vuePapers as VuePapers
+    el.update()
   }
 }
 </script>

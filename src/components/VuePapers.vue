@@ -7,7 +7,7 @@
     >
 
     <div
-      class="vue-papers__page__padding-top"
+      class="vue-papers__page__space"
       :style="`height: ${paddingTop}px;`"
       />
 
@@ -15,9 +15,19 @@
       v-for="childIndex in page"
       :key="`child-index-${childIndex}`"
       class="vue-papers__page__child"
-      v-html="children[childIndex].outerHTML"
       >
+      <div v-html="children[childIndex].outerHTML" />
+
+      <div
+        class="vue-papers__page__space"
+        :style="`height: ${marginBetween}px`"
+        />
     </div>
+
+    <div
+      class="vue-papers__page__space"
+      :style="`height: ${paddingBottom}px;`"
+      />
   </div>
 
   <div
@@ -34,6 +44,9 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class VuePapers extends Vue {
   @Prop({ default: 0 }) private paddingTop!: number
+  @Prop({ default: 0 }) private paddingBottom!: number
+  @Prop({ default: 0 }) private marginBetween!: number
+
   height = 1123 - 2 * 40 // Match print padding
   width = 794
   pages: number[][] = []
@@ -50,6 +63,8 @@ export default class VuePapers extends Vue {
     let height = this.height
 
     height -= this.paddingTop
+    height -= this.paddingBottom
+    height -= this.marginBetween
 
     return height
   }
@@ -60,6 +75,17 @@ export default class VuePapers extends Vue {
     })
   }
 
+  private getElementHeight (el: Element) {
+    let height = el?.getBoundingClientRect().height
+
+    const marginTop = parseInt(getComputedStyle(el, '').getPropertyValue('margin-top')) || 0
+    const marginBottom = parseInt(getComputedStyle(el, '').getPropertyValue('margin-bottom')) || 0
+
+    height += marginTop + marginBottom
+
+    return height || 0
+  }
+
   checkHeights () {
     let pageIndex = 0
     let pageHeight = 0
@@ -68,13 +94,7 @@ export default class VuePapers extends Vue {
 
     for (let i = 0; i < this.children.length; i++) {
       const el = this.children[i] as Element
-      let height = el?.getBoundingClientRect().height
-
-      const margin = parseInt(getComputedStyle(el, '').getPropertyValue('margin-top')) +
-        parseInt(getComputedStyle(el, '').getPropertyValue('margin-bottom'))
-
-      console.log(margin)
-      height += margin
+      let height = this.getElementHeight(el)
 
       if (!height) {
         continue
@@ -161,7 +181,7 @@ export default class VuePapers extends Vue {
         }
       }
 
-      &__padding-top {
+      &__space {
         position: relative;
         background-color: pink;
       }
