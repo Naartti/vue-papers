@@ -47,7 +47,7 @@ export default class VuePapers extends Vue {
   @Prop({ default: 0 }) private paddingBottom!: number
   @Prop({ default: 0 }) private marginBetween!: number
 
-  height = 1123 - 2 * 40 // Match print padding
+  height = 1123 - 2 * 45 // Match print padding
   width = 794
   pages: number[][] = []
 
@@ -125,7 +125,8 @@ export default class VuePapers extends Vue {
   @shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
   @page-width: 794px; // 21cm;
   @page-height: 1123px; // 29.7cm;
-  @child-width: 714px; // 2x40 padding
+  @child-width: 704px; // 2x45 padding
+  @print-side-padding: 45px;
 
   .vue-papers {
     position: relative;
@@ -151,7 +152,7 @@ export default class VuePapers extends Vue {
       background-color: #ffffff;
       box-sizing: border-box;
       margin-bottom: 20px;
-      padding: 40px 0px; // NOTE: Keep 40px, it's for matching print.
+      padding: @print-side-padding 0px;
       break-inside: avoid;
 
       @media print {

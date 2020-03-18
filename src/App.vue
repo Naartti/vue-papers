@@ -52,7 +52,7 @@ export default class App extends Vue {
     position: relative;
     background-color: skyblue;
     margin: 0px;
-    border: 1px solid blue;
+    // border: 1px solid blue;
     box-sizing: border-box;
   }
 </style>
