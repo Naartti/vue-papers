@@ -32,6 +32,10 @@
       class="vue-papers__page__space"
       :style="`height: ${paddingBottom}px;`"
       />
+
+    <div class="vue-papers__page__footer">
+      <slot name="footer" />
+    </div>
   </div>
 
   <div
@@ -129,6 +133,7 @@ export default class VuePapers extends Vue {
   @shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
   @page-width: 794px; // 21cm;
   @page-height: 1123px; // 29.7cm;
+  @page-inner-height: 1030px;
   @child-width: 704px; // 2x45 padding
   @print-side-padding: 45px;
 
@@ -141,9 +146,9 @@ export default class VuePapers extends Vue {
       max-height: none;
       background-color: initial;
 
-      &:last-child &__page {
-        height: auto !important;
-      }
+      // &:last-child &__page {
+      //   height: auto !important;
+      // }
     }
 
     &__page {
@@ -164,13 +169,14 @@ export default class VuePapers extends Vue {
         margin: initial;
         border-radius: initial;
         width: initial;
-        min-height: initial;
+        min-height: @page-inner-height;
         max-height: initial;
-        height: 100vh;
+        height: auto;
         box-shadow: none;
         position: relative;
         overflow: initial;
         zoom: 1;
+        background-color: green;
       }
 
       &__child {
@@ -193,14 +199,29 @@ export default class VuePapers extends Vue {
 
       &__header {
         position: absolute;
-        top: 45px;
+        top: 28px;
         left: 45px;
         right: 45px;
         height: auto;
         z-index: 2;
 
         @media print {
-          top: 0px;
+          top: -18px;
+          left: 0px;
+          right: 0px;
+        }
+      }
+
+      &__footer {
+        position: absolute;
+        bottom: 28px;
+        left: 45px;
+        right: 45px;
+        height: auto;
+        z-index: 2;
+
+        @media print {
+          bottom: -18px;
           left: 0px;
           right: 0px;
         }

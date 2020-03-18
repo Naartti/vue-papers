@@ -7,7 +7,8 @@
     :margin-between="20"
     >
 
-    <h3 slot="header" style="border: 1px solid black;">Print page</h3>
+    <h3 slot="header" style="border: 1px solid black;">Header</h3>
+    <h5 slot="footer" style="border: 1px solid black;">Some footer<br>here</h5>
 
     <div
       v-for="(height, index) in blocks"
@@ -49,8 +50,8 @@ export default class App extends Vue {
   }
 }
 </script>
-
 <style lang="less">
+
   .block {
     position: relative;
     background-color: skyblue;
