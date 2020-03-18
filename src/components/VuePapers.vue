@@ -8,6 +8,7 @@
     <div
       v-for="childIndex in page"
       :key="`child-index-${childIndex}`"
+      class="vue-papers__page__child"
       v-html="children[childIndex].outerHTML"
       >
     </div>
@@ -84,6 +85,17 @@ export default class HelloWorld extends Vue {
   .vue-papers {
     position: relative;
 
+    @media print {
+      margin: initial;
+      overflow: initial;
+      max-height: none;
+      background-color: initial;
+
+      &:last-child &__page {
+        height: auto !important;
+      }
+    }
+
     &__page {
       width: @page-width;
       min-height: @page-height;
@@ -91,6 +103,30 @@ export default class HelloWorld extends Vue {
       max-height: @page-height;
       box-shadow: @shadow;
       background-color: #ffffff;
+
+      @media print {
+        padding: initial;
+        margin: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        max-height: initial;
+        height: 100vh;
+        box-shadow: none;
+        position: relative;
+        overflow: initial;
+        zoom: 1;
+      }
+
+      &__child {
+        position: relative;
+
+        @media print {
+          overflow: initial;
+          break-inside: avoid;
+          filter: none;
+        }
+      }
     }
 
     /**
