@@ -6,6 +6,10 @@
     class="vue-papers__page"
     >
 
+    <div class="vue-papers__page__header">
+      <slot name="header" />
+    </div>
+
     <div
       class="vue-papers__page__space"
       :style="`height: ${paddingTop}px;`"
@@ -185,6 +189,21 @@ export default class VuePapers extends Vue {
       &__space {
         position: relative;
         background-color: pink;
+      }
+
+      &__header {
+        position: absolute;
+        top: 45px;
+        left: 45px;
+        right: 45px;
+        height: auto;
+        z-index: 2;
+
+        @media print {
+          top: 0px;
+          left: 0px;
+          right: 0px;
+        }
       }
     }
 

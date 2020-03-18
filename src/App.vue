@@ -6,6 +6,9 @@
     :padding-bottom="padding"
     :margin-between="20"
     >
+
+    <h3 slot="header" style="border: 1px solid black;">Print page</h3>
+
     <div
       v-for="(height, index) in blocks"
       :key="index"
