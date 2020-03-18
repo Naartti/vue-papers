@@ -177,7 +177,6 @@ export default class VuePapers extends Vue {
         position: relative;
         overflow: initial;
         zoom: 1;
-        background-color: green;
       }
 
       &__child {

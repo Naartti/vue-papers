@@ -7,8 +7,20 @@
     :margin-between="20"
     >
 
-    <h3 slot="header" contenteditable style="border: 1px solid black;">Header</h3>
-    <h5 slot="footer" style="border: 1px solid black;">Some footer<br>here</h5>
+    <h3
+      slot="header"
+      contenteditable
+      style="border: 1px solid black;"
+      v-html="header"
+      @blur="ev => header = ev.target.innerText"
+      />
+    <h5
+      slot="footer"
+      contenteditable
+      style="border: 1px solid black;"
+      v-html="footer"
+      @blur="ev => footer = ev.target.innerText"
+      />
 
     <div
       v-for="(height, index) in blocks"
@@ -28,6 +40,8 @@ import VuePapers from './components/VuePapers.vue'
   components: { VuePapers }
 })
 export default class App extends Vue {
+  header = 'header'
+  footer = 'footer'
   margin = 20
   padding = 0
   blocks = [120, 130, 140, 150, 140, 230, 220, 250, 120, 230, 110, 240, 150]
