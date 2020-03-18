@@ -1,7 +1,6 @@
 {
   "name": "vue-papers",
   "version": "0.1.0",
-  "private": true,
   "author": "Mattias Naarttijärvi",
   "description": "Place elements on to multiple A4 pages.",
   "repository": {
@@ -23,7 +22,9 @@
     "build": "vue-cli-service build",
     "build:bundle": "vue-cli-service build --target lib --name index ./src/components/VuePapers.vue",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "npm:patch": "npm run lint && npm run build:bundle && npm version patch && npm publish",
+    "npm:minor": "npm run lint && npm run build:bundle && npm version minor && npm publish"
   },
   "dependencies": {
     "core-js": "^3.6.4",
