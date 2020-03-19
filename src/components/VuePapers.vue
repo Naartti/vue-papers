@@ -20,7 +20,7 @@
       :key="`child-index-${childIndex}`"
       class="vue-papers__page__child"
       >
-      <div v-html="children[childIndex].outerHTML" />
+      <div v-html="getChildContent(childIndex)" />
 
       <div
         class="vue-papers__page__space"
@@ -81,7 +81,12 @@ export default class VuePapers extends Vue {
 
   update () {
     this.delayIndex = 0
+    this.$forceUpdate()
     this.checkHeightsInvoker()
+  }
+
+  private getChildContent (index: number) {
+    return (this.children[index] as Element)?.outerHTML || ''
   }
 
   private getElementHeight (el: Element) {
