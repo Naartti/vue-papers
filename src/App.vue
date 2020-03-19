@@ -2,9 +2,10 @@
 <div id="app">
   <vue-papers
     ref="vuePapers"
-    :padding-top="120"
+    :padding-top="0"
     :padding-bottom="padding"
-    :margin-between="20"
+    :margin-between="0"
+    :page-height="112"
     >
 
     <h3
@@ -25,7 +26,20 @@
     <div
       v-for="(height, index) in blocks"
       :key="index"
-      :style="`height: ${height}px; margin: ${margin}px;`"
+      :style="`height: ${height * multiplier}px; margin: ${margin}px;`"
+      class="block"
+      />
+  </vue-papers>
+
+  <vue-papers
+    :page-height="112"
+    >
+    <h1 slot="header">Page 2</h1>
+
+    <div
+      v-for="(height, index) in blocks"
+      :key="index"
+      :style="`height: ${height * multiplier}px; margin: ${margin}px;`"
       class="block"
       />
   </vue-papers>
@@ -42,11 +56,20 @@ import VuePapers from './components/VuePapers.vue'
 export default class App extends Vue {
   header = 'header'
   footer = 'footer'
-  margin = 20
+  margin = 5
+  multiplier = 1
   padding = 0
-  blocks = [120, 130, 140, 150, 140, 230, 220, 250, 120, 230, 110, 240, 150]
+
+  get blocks () {
+    return [120, 130, 140, 150, 140, 230, 220, 250, 120, 230, 110, 240, 150]
+      .map(a => a * this.multiplier)
+  }
 
   mounted () {
+    window.dev.setMultiplier = (multiplier: number) => {
+      this.multiplier = multiplier
+    }
+
     window.dev.setPadding = (padding: number) => {
       this.padding = padding
       this.update()
@@ -75,6 +98,9 @@ export default class App extends Vue {
     position: relative;
     width: 100%;
     height: 100%;
+
+    transform: translateX(10px) translateY(10px) scale(0.1);
+    transform-origin: 0 0;
   }
 
   .block {

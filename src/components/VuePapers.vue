@@ -3,6 +3,7 @@
   <div
     v-for="(page, pageIndex) in pages"
     :key="`page-index-${pageIndex}`"
+    :ref="`page_${pageIndex}`"
     class="vue-papers__page"
     >
 
@@ -38,6 +39,7 @@
     </div>
   </div>
 
+  <!-- Measure slot elements -->
   <div
     class="vue-papers__dummy no-print"
     ref="childrenWrapper"
@@ -57,7 +59,7 @@ export default class VuePapers extends Vue {
 
   delays = [100, 500, 1000, 2000, 5000, 10000, 15000]
   delayIndex = 0
-  height = 1123 - 2 * 45 // Match print padding
+  height = 1123
   width = 794
   pages: number[][] = []
 
@@ -72,6 +74,7 @@ export default class VuePapers extends Vue {
   get availablePageHeight () {
     let height = this.height
 
+    height -= 2 * 45 // Match print padding
     height -= this.paddingTop
     height -= this.paddingBottom
     height -= this.marginBetween
@@ -85,12 +88,25 @@ export default class VuePapers extends Vue {
     this.checkHeightsInvoker()
   }
 
+  private getScale () {
+    let scale = 1
+    const actualPageHeight = (this.$refs.page_0 as Element[])?.[0]?.getBoundingClientRect().height || 0
+
+    if (!actualPageHeight) {
+      return scale
+    }
+
+    scale = this.height / actualPageHeight
+    return scale
+  }
+
   private getChildContent (index: number) {
     return (this.children[index] as Element)?.outerHTML || ''
   }
 
   private getElementHeight (el: Element) {
-    let height = el?.getBoundingClientRect().height
+    const scale = this.getScale()
+    let height = el?.getBoundingClientRect().height * scale
 
     const marginTop = parseInt(getComputedStyle(el, '').getPropertyValue('margin-top')) || 0
     const marginBottom = parseInt(getComputedStyle(el, '').getPropertyValue('margin-bottom')) || 0
