@@ -145,8 +145,8 @@ export default class VuePapers extends Vue {
 <style lang="less">
   @media print {
     html, body {
-      margin: 0px;
-      padding: 0px;
+      margin: 0px 0px !important;
+      padding: 0px 0px !important;
     }
   }
 </style>
@@ -159,17 +159,16 @@ export default class VuePapers extends Vue {
   @print-side-padding: 45px;
 
   .vue-papers {
+    width: @page-width;
+    margin: 0px auto;
     position: relative;
 
     @media print {
-      margin: initial;
+      width: initial;
+      margin: initial initial;
       overflow: initial;
       max-height: none;
       background-color: initial;
-
-      // &:last-child &__page {
-      //   height: auto !important;
-      // }
     }
 
     &__page {
@@ -197,6 +196,7 @@ export default class VuePapers extends Vue {
         position: relative;
         overflow: initial;
         zoom: 1;
+        box-sizing: border-box;
       }
 
       &__child {
