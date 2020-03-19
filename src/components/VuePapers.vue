@@ -214,7 +214,6 @@ export default class VuePapers extends Vue {
 
       &__space {
         position: relative;
-        background-color: pink;
       }
 
       &__header {
