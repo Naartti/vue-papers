@@ -175,7 +175,7 @@ export default class VuePapers extends Vue {
   @shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
   @page-width: 794px; // 21cm;
   @page-height: 1123px; // 29.7cm;
-  @page-inner-height: 1030px;
+  @page-print-height: 100vh;
   @child-width: 704px; // 2x45 padding
   @print-side-padding: 45px;
 
@@ -210,7 +210,7 @@ export default class VuePapers extends Vue {
         margin: initial;
         border-radius: initial;
         width: initial;
-        min-height: @page-inner-height;
+        min-height: @page-print-height;
         max-height: initial;
         height: auto;
         box-shadow: none;

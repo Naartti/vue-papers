@@ -1,5 +1,9 @@
 <template>
-<div id="app">
+<div id="app"
+  :class="{ scale }"
+  >
+  <button class="no-print" @click="scale = !scale">SCALE</button>
+
   <vue-papers
     ref="vuePapers"
     :padding-top="0"
@@ -59,6 +63,7 @@ export default class App extends Vue {
   margin = 5
   multiplier = 1
   padding = 0
+  scale = true
 
   get blocks () {
     return [120, 130, 140, 150, 140, 230, 220, 250, 120, 230, 110, 240, 150]
@@ -88,19 +93,37 @@ export default class App extends Vue {
 }
 </script>
 <style lang="less">
-  body, html {
-    margin: 20px 10px;
+  body {
+    margin: 0px;
+    word-wrap: break-word;
+    overflow: hidden;
+
+    p {
+      margin: 0px;
+    }
+  }
+
+  .MJXc-display {
+    display: inline-block !important;
   }
 
   #app {
+    position: relative;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     position: relative;
     width: 100%;
     height: 100%;
+  }
 
+  .scale {
     transform: translateX(10px) translateY(10px) scale(0.1);
     transform-origin: 0 0;
+    overflow-y: initial;
+
+    @media print {
+      transform: none;
+    }
   }
 
   .block {
@@ -109,5 +132,11 @@ export default class App extends Vue {
     margin: 0px;
     // border: 1px solid blue;
     box-sizing: border-box;
+  }
+
+  .no-print {
+    @media print {
+      display: none;
+    }
   }
 </style>
