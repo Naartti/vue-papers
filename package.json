@@ -1,6 +1,6 @@
 {
   "name": "vue-papers",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": "Mattias Naarttijärvi",
   "description": "Place elements on to multiple A4 pages.",
   "repository": {
