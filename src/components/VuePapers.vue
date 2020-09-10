@@ -21,7 +21,10 @@
       :key="`child-index-${childIndex}`"
       class="vue-papers__page__child"
       >
-      <div v-html="getChildContent(childIndex)" />
+      <div
+        :ref="`child_wrapper_${childIndex}`"
+        :child-index="insertClonedChild(childIndex, `child_wrapper_${childIndex}`)"
+      />
 
       <div
         class="vue-papers__page__space"
@@ -100,8 +103,19 @@ export default class VuePapers extends Vue {
     return scale
   }
 
-  private getChildContent (index: number) {
-    return (this.children[index] as Element)?.outerHTML || ''
+  private insertClonedChild (index: number, refName: string) {
+    this.$nextTick(() => {
+      const parent = (this.$refs[refName] as HTMLDivElement[])?.[0]
+      const child = this.children[index]?.cloneNode(true)
+      if (!parent || !child) {
+        return
+      }
+
+      parent.innerHTML = '' // Remove eventual previous children
+      parent.appendChild(child)
+    })
+
+    return index
   }
 
   private getElementHeight (el: Element) {
